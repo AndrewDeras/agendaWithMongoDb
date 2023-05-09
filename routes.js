@@ -3,7 +3,7 @@ const route = express.Router();
 
 // controllers
 const { index } = require("./src/controllers/homeController");
-const { loginIndex } = require("./src/controllers/loginController");
+const { loginIndex, register } = require("./src/controllers/loginController");
 
 //middleware
 
@@ -11,8 +11,9 @@ const { loginIndex } = require("./src/controllers/loginController");
 route.get("/", index);
 
 //login
-
 route.get("/login/index", loginIndex);
+route.post("/login/register", register);
+
 
 
 module.exports = route;
