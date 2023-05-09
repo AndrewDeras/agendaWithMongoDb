@@ -31,11 +31,27 @@ class Login {
 
   };
 
+  async login() {
+    this.validate();
+    if (this.errors.length > 0) return;
+    this.user = await LoginModel.findOne({ email: this.body.email });
+
+    if (!this.user) {
+      this.errors.push("E-mail não cadastrado na base de dados.");
+      return;
+    };
+
+    if (!bcryptjs.compareSync(this.body.password, this.user.password)) {
+      this.errors.push("Senha inválida.");
+      this.user = null;
+      return;
+    };
+
+  };
+
   async userExist() {
-    const user = await LoginModel.findOne({ email: this.body.email });
-
-    if (user) this.errors.push("E-mail já cadastrado na nossa base de dados.");
-
+    this.user = await LoginModel.findOne({ email: this.body.email });
+    if (this.user) this.errors.push("E-mail já cadastrado na nossa base de dados.");
   };
 
   validate() {
