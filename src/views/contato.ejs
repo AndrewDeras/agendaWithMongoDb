@@ -1,4 +1,5 @@
-<%- include("./includes/head")%> <%- include("./includes/navbar")%>
+<%- include("./includes/head")%> 
+<%- include("./includes/navbar")%>
 
 <div class="container">
   <div class="row">
@@ -9,12 +10,16 @@
       <p class="text-center lead">Crie ou edite seu contato.</p>
       <%- include("./includes/messages") %>
 
-      <form action="/contato/register" method="post">
+      <% if(contato._id){ %>
+        <form action="/contato/edit/<%= contato._id %>" method="post">
+      <% } else { %>
+        <form action="/contato/register" method="post">
+      <% } %>
         <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
         <div class="mb-3">
           <label class="form-label">Nome:</label>
           <input
-            value="<%= contato.name%>"
+            value="<%= contato.name %>"
             type="text"
             class="form-control"
             name="name"
@@ -23,7 +28,7 @@
         <div class="mb-3">
           <label class="form-label">Sobrenome</label>
           <input
-            value="<%= contato.lastName%>"
+            value="<%= contato.lastName %>"
             type="text"
             class="form-control"
             name="lastName"
@@ -32,7 +37,7 @@
         <div class="mb-3">
           <label class="form-label">E-mail</label>
           <input
-            value="<%= contato.email%>"
+            value="<%= contato.email %>"
             type="email"
             class="form-control"
             name="email"
@@ -41,14 +46,17 @@
         <div class="mb-3">
           <label class="form-label">Telefone</label>
           <input
-            value="<%= contato.telephone%>"
+            value="<%= contato.telephone %>"
             type="tel"
             class="form-control"
             name="telephone"
           />
         </div>
-
-        <button type="submit" class="btn btn-primary">Salvar contato</button>
+        <% if(contato._id){ %>
+          <button type="submit" class="btn btn-primary">Atualizar contato</button>
+        <% } else { %>
+          <button type="submit" class="btn btn-primary">Salvar contato</button>
+        <% } %>
       </form>
     </div>
 

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { async } = require("regenerator-runtime");
 const validator = require("validator");
 
 const ContatoSchema = new mongoose.Schema({
@@ -18,6 +19,15 @@ class Contato {
     this.contato = null;
   };
 
+   async update(id) {
+    if (typeof id !== "string") return;
+    this.validate();
+    if (this.errors.length > 0) return;
+
+    this.contato = await ContatoModel.findByIdAndUpdate(id, this.body, { new: true });
+    return;
+  };
+
   async register() {
     this.validate();
     if (this.errors.length > 0) return;
@@ -30,7 +40,7 @@ class Contato {
     if (typeof id !== "string") return;
     const contato = await ContatoModel.findById(id);
     return contato;
-  }
+  };
 
   validate() {
     this.cleanUp();

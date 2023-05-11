@@ -4,7 +4,7 @@ const route = express.Router();
 // controllers
 const { index } = require("./src/controllers/homeController");
 const { loginIndex, register, login, logout } = require("./src/controllers/loginController");
-const { contatoIndex, contatoRegister, contatoEdit } = require("./src/controllers/contatoController");
+const { contatoIndex, contatoRegister, contatoEdit, contatoUpdate } = require("./src/controllers/contatoController");
 
 //middleware
 
@@ -23,6 +23,7 @@ route.get("/login/logout", logout);
 route.get("/contato/index", loginRequired, contatoIndex);
 route.post("/contato/register", loginRequired, contatoRegister);
 route.get("/contato/index/:id", loginRequired, contatoEdit);
+route.post("/contato/edit/:id", loginRequired, contatoUpdate);
 
 
 
