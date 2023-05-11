@@ -1,8 +1,12 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-import "./assets/css/style.css";
-
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 
-console.log("andrew");
+import LoginAndSignin from "./modules/LoginAndSignin";
+
+const login = new LoginAndSignin(".form-login");
+const signin = new LoginAndSignin(".form-signin");
+
+login.init();
+signin.init();

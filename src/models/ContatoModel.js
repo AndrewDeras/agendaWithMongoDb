@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { async } = require("regenerator-runtime");
 const validator = require("validator");
 
 const ContatoSchema = new mongoose.Schema({
@@ -19,7 +18,7 @@ class Contato {
     this.contato = null;
   };
 
-   async update(id) {
+  async update(id) {
     if (typeof id !== "string") return;
     this.validate();
     if (this.errors.length > 0) return;
@@ -36,6 +35,20 @@ class Contato {
 
   };
 
+  static async delete(id) {
+    if (typeof id !== "string") return;
+
+    const contato = await ContatoModel.findByIdAndDelete({ _id: id });
+
+    return contato;
+  };
+
+  static async searchAll() {
+
+    const contatos = await ContatoModel.find().sort({ createdAt: -1 });
+    return contatos;
+  };
+
   static async searchById(id) {
     if (typeof id !== "string") return;
     const contato = await ContatoModel.findById(id);
@@ -46,11 +59,11 @@ class Contato {
     this.cleanUp();
 
     // o e-mail precisa ser válido
-    if (this.body.email && !validator.isEmail(this.body.email)) this.errors.push("E-mail inválido.");
-    if (!this.body.name) this.errors.push("O nome é um campo obrigatório");
+    if (this.body.email && !validator.isEmail(this.body.email)) return this.errors.push("E-mail inválido.");
+    if (!this.body.name) return this.errors.push("O nome é um campo obrigatório");
 
     if (!this.body.email && !this.body.telephone) {
-      this.errors.push("Pelo menos um campo de contato precisa ser enviado, Email ou Telefone.");
+      return this.errors.push("Pelo menos um campo de contato precisa ser enviado, Email ou Telefone.");
     }
 
   };

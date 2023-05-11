@@ -10,14 +10,35 @@
       <p class="text-center lead">Seus contatos estão abaixo.</p>
 			<%- include("./includes/messages")  %>
 
-			<div class="responsive-table my-3">
-				<table class="table">
-					<tr>
-						<td>Andrew</td>
-						<td>Deras</td>
-						<td>0000000000</td>
-						<td>email@email.com</td>
-					</tr>
+			<% if(contatos.length > 0){ %>
+				<div class="responsive-table my-3">
+					<table  class="table table-bordered ">
+						<thead>
+							<tr>
+								<th class="text-center" scope="col">Nome</th>
+								<th class="text-center" scope="col">Sobrenome</th>
+								<th class="text-center" scope="col">E-mail</th>
+								<th class="text-center" scope="col">Telefone</th>
+								<th class="text-center" scope="col">Ações</th>
+							</tr>
+						</thead>
+						
+							<% contatos.forEach((contato)=>{ %>
+								<tr>
+									<td class="text-center" ><%-contato.name %></td>
+									<td class="text-center" ><%-contato.lastName %></td>
+									<td class="text-center" ><%-contato.email %></td>
+									<td class="text-center" ><%-contato.telephone %></td>
+									<td class="text-center" >
+										<a class="text-decoration-none" href="/contato/index/<%= contato._id %>">Editar</a>
+										<a class="text-danger text-decoration-none" href="/contato/delete/<%= contato._id %>">Excluir</a>
+									</td>
+								</tr>
+							<% }) %>
+			<% } else { %>
+				<p class="text-center lead">Não existem contatos na sua agenda.</p>
+			<% } %>
+
 				</table>
 			</div>
     </div>

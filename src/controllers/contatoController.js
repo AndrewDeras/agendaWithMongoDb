@@ -46,7 +46,7 @@ exports.contatoUpdate = async (req, res) => {
 
     if (contato.errors.length > 0) {
       req.flash("errors", contato.errors);
-      req.session.save(() => res.redirect("back"));
+      req.session.save(() => res.redirect(`/contato/index/${req.params.id}`));
       return;
     };
 
@@ -58,5 +58,18 @@ exports.contatoUpdate = async (req, res) => {
     console.log(error);
     res.render("404");
   }
+
+};
+
+exports.contatoDelete = async (req, res) => {
+  if (!req.params.id) return res.render("404");
+
+  const contatoDelete = await Contato.delete(req.params.id);
+
+  if (!contatoDelete) return res.render("404");
+
+  req.flash("success", "Contato removido com sucesso.");
+  req.session.save(() => res.redirect("/"));
+  return;
 
 };
