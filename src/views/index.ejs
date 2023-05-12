@@ -7,7 +7,15 @@
 
     <div class="col-lg-8 my-3">
       <h1 class="text-center">Agenda</h1>
-      <p class="text-center lead">Seus contatos estão abaixo.</p>
+
+			<% if(contatos.length > 0){  %>
+				<p class="text-center lead">Seus contatos estão abaixo.</p>
+			<% } else { %>
+				<p class="text-center lead">Não existem contatos na sua agenda.</p>
+				<p class="text-center lead"><a href="/contato/index" class="btn btn-primary">Cadastrar</a></p>
+
+			<% }%>
+
 			<%- include("./includes/messages")  %>
 
 			<% if(contatos.length > 0){ %>
@@ -35,12 +43,9 @@
 									</td>
 								</tr>
 							<% }) %>
-			<% } else { %>
-				<p class="text-center lead">Não existem contatos na sua agenda.</p>
-			<% } %>
-
-				</table>
-			</div>
+					</table>
+				</div>
+			<% }%>
     </div>
 
     <div class="col-lg-2"></div>
